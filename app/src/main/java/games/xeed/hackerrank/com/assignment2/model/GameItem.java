@@ -1,11 +1,14 @@
 package games.xeed.hackerrank.com.assignment2.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
  * Created by nitinraj.arvind on 7/11/2015.
  */
-public class GameItem {
+public class GameItem  implements Parcelable{
 
     String name;
     String image;
@@ -14,6 +17,76 @@ public class GameItem {
     String rating;
     String description;
     List<DemographicItem> demographic;
+
+
+    /**
+     * @hide
+     * */
+    public static final Creator<GameItem> CREATOR =
+            new Creator<GameItem>() {
+
+                @Override
+                public GameItem createFromParcel(Parcel source) {
+                    return new GameItem(source);
+                }
+
+                @Override
+                public GameItem[] newArray(int size) {
+                    return new GameItem[size];
+                }
+            };
+
+    /**
+     * @hide
+     * */
+    public GameItem(Parcel in){
+        readFromParcel(in);
+    }
+
+    /**
+     * @hide
+     * */
+    public GameItem(){
+        super();
+    }
+
+    /**
+     * @hide
+     * */
+    private void readFromParcel(Parcel in){
+        name = in.readString();
+        image = in.readString();
+        url = in.readString();
+        price = in.readString();
+        rating = in.readString();
+        description = in.readString();
+        in.readList(demographic, DemographicItem.class.getClassLoader());
+    }
+
+    /**
+     * @hide
+     * */
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(image);
+        dest.writeString(url);
+        dest.writeString(price);
+        dest.writeString(rating);
+        dest.writeString(description);
+        dest.writeList(demographic);
+    }
+
+
+    /**
+     * @hide
+     * */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
 
     public String getName() {
         return name;
