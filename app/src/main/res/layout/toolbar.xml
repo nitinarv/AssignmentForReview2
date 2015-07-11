@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/toolbar_company_appname"
-                android:text="XSEED | App Store"
+                android:text="@string/appstore_title"
                 android:textAppearance="?android:textAppearanceSmall"
                 />
 
@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/toolbar_specific_name"
-                android:text="Game Store"
+                android:text="@string/game_store_title"
                 android:textStyle="bold"
                 android:textAppearance="?android:textAppearanceMedium"/>
 
@@ -60,7 +60,7 @@
             android:textColor="@color/toolbar_page_name_color_dark"
             android:paddingLeft="24dp"
             android:textAppearance="?android:textAppearanceLarge"
-            android:text="Title"/>
+            android:text="@string/empty_string"/>
 
 
     </LinearLayout>
