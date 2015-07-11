@@ -1,5 +1,6 @@
 package games.xeed.hackerrank.com.assignment2.view;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +9,9 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import games.xeed.hackerrank.com.assignment2.R;
+import games.xeed.hackerrank.com.assignment2.controller.OperationCallback;
+import games.xeed.hackerrank.com.assignment2.controller.XseedTestTask;
+import games.xeed.hackerrank.com.assignment2.model.TaskResult;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -50,6 +54,49 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        XseedTestTask x1 = new XseedTestTask(this, new OperationCallback() {
+            @Override
+            public void processException(Exception e) {
+
+            }
+
+            @Override
+            public void onProgressStarted() {
+
+            }
+
+            @Override
+            public void onProgressEnded() {
+
+            }
+
+            @Override
+            public void onOperationCancelled() {
+
+            }
+
+            @Override
+            public void onProgressUpdated(int progressPercent) {
+
+            }
+
+            @Override
+            public void processFinalResult(Object object) {
+
+            }
+
+            @Override
+            public void useStringResult(String result) {
+
+            }
+
+            @Override
+            public void storeTaskResult(TaskResult taskResult) {
+
+            }
+        });
+
+        x1.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
     }
