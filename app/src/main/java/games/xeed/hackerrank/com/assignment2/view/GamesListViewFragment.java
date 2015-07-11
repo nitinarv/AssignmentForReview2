@@ -1,5 +1,6 @@
 package games.xeed.hackerrank.com.assignment2.view;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,9 +33,19 @@ public class GamesListViewFragment extends ListFragment {
 
     String[] tickerSymbols;
     TaskResult taskResult;
+    TaskCallbacks taskCallbacks;
 
     interface TaskCallbacks{
         public void onGameItemClicked(GameItem gameItem);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        setRetainInstance(true);
+        activity = getActivity();
+        taskCallbacks = (MainActivity) activity;
+
     }
 
     @Override
