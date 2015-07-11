@@ -4,10 +4,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import games.xeed.hackerrank.com.assignment2.R;
 
 public class DetailActivity extends BaseActivity {
+
+
+    private FrameLayout frameLayout;
+    private GamesDetailFragment gameDetailFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,6 +20,25 @@ public class DetailActivity extends BaseActivity {
         setContentView(R.layout.activity_detail);
 
         setTitle(this, getClass());
+        gameDetailFragment = (GamesDetailFragment) getSupportFragmentManager().findFragmentByTag(GamesDetailFragment.TAG_GAME_DETAIL_FRAGMENT);
+
+
+        frameLayout = (FrameLayout) findViewById(R.id.game_list_fragment);
+
+        if (savedInstanceState == null) {
+            if(gameDetailFragment==null) {
+                gameDetailFragment = new GamesDetailFragment();
+            }
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.game_detail_fragment, gameDetailFragment, GamesDetailFragment.TAG_GAME_DETAIL_FRAGMENT)
+                    .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.bounce_interpolator)
+                    .commit();
+        }else{
+            gameDetailFragment = (GamesDetailFragment) getSupportFragmentManager().findFragmentByTag(GamesDetailFragment.TAG_GAME_DETAIL_FRAGMENT);
+        }
+
+
     }
 
     @Override

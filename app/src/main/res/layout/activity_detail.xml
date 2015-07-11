@@ -11,7 +11,7 @@ tools:context="games.xeed.hackerrank.com.assignment2.view.DetailActivity">
     layout="@layout/toolbar" />
 
 <FrameLayout
-    android:id="@+id/game_list_fragment"
+    android:id="@+id/game_detail_fragment"
     android:layout_weight="1"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
