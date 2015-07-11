@@ -3,6 +3,7 @@ package games.xeed.hackerrank.com.assignment2.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -60,6 +61,9 @@ public class GameItem  implements Parcelable{
         price = in.readString();
         rating = in.readString();
         description = in.readString();
+        if(demographic==null){
+            demographic = new ArrayList<DemographicItem>();
+        }
         in.readList(demographic, DemographicItem.class.getClassLoader());
     }
 
@@ -74,6 +78,9 @@ public class GameItem  implements Parcelable{
         dest.writeString(price);
         dest.writeString(rating);
         dest.writeString(description);
+        if(demographic==null){
+            demographic = new ArrayList<DemographicItem>();
+        }
         dest.writeList(demographic);
     }
 

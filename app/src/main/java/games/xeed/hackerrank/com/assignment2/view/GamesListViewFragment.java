@@ -31,6 +31,7 @@ public class GamesListViewFragment extends ListFragment {
     public static final String GAME_DETAIL_EXTRA = "GAME_DETAIL_EXTRA";
 
     String[] tickerSymbols;
+    TaskResult taskResult;
 
     interface TaskCallbacks{
         public void onGameItemClicked(GameItem gameItem);
@@ -85,8 +86,8 @@ public class GamesListViewFragment extends ListFragment {
             }
 
             @Override
-            public void storeTaskResult(TaskResult taskResult) {
-
+            public void storeTaskResult(TaskResult mTaskResult) {
+                taskResult = mTaskResult;
                 tickerSymbols = new String[taskResult.getGameItemList().size()];
                 for(int i=0; i< taskResult.getGameItemList().size(); i++){
                     GameItem item = taskResult.getGameItemList().get(i);
@@ -121,7 +122,8 @@ public class GamesListViewFragment extends ListFragment {
         // retrieve theListView item
 //        ListViewItem item = mItems.get(position);
         Intent detailScreenIntent = new Intent(getActivity(), DetailActivity.class);
-        detailScreenIntent.putExtra(GAME_DETAIL_EXTRA,tickerSymbols[position]);
+        GameItem gameItem = taskResult.getGameItemList().get(position);
+        detailScreenIntent.putExtra(GAME_DETAIL_EXTRA,gameItem);
         startActivity(detailScreenIntent);
 
     }

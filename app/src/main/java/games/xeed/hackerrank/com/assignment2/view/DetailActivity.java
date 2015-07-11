@@ -7,12 +7,14 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import games.xeed.hackerrank.com.assignment2.R;
+import games.xeed.hackerrank.com.assignment2.model.GameItem;
 
-public class DetailActivity extends BaseActivity {
+public class DetailActivity extends BaseActivity implements  GamesDetailFragment.TaskCallbacks{
 
 
     private FrameLayout frameLayout;
     private GamesDetailFragment gameDetailFragment;
+    public static GameItem gameItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,15 @@ public class DetailActivity extends BaseActivity {
         }
 
 
+        gameItem = getIntent().getParcelableExtra(GamesListViewFragment.GAME_DETAIL_EXTRA);
+
+
+
+    }
+
+    public GameItem getGameItem(){
+        gameItem = getIntent().getParcelableExtra(GamesListViewFragment.GAME_DETAIL_EXTRA);
+        return gameItem;
     }
 
     @Override
@@ -61,5 +72,10 @@ public class DetailActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void setGameItem(GameItem gameItem) {
+
     }
 }
