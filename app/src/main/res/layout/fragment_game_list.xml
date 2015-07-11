@@ -7,13 +7,16 @@
     <TextView android:id="@+id/game_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp"></TextView>
+        android:textStyle="bold"
+        android:paddingLeft="24dp"
+        android:paddingRight="16dp"></TextView>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        android:padding="24dp"/>
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>
 
     <ListView
         android:layout_width="fill_parent"
