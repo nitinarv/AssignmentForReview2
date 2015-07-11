@@ -54,51 +54,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        XseedTestTask x1 = new XseedTestTask(this, new OperationCallback() {
-            @Override
-            public void processException(Exception e) {
-
-            }
-
-            @Override
-            public void onProgressStarted() {
-
-            }
-
-            @Override
-            public void onProgressEnded() {
-
-            }
-
-            @Override
-            public void onOperationCancelled() {
-
-            }
-
-            @Override
-            public void onProgressUpdated(int progressPercent) {
-
-            }
-
-            @Override
-            public void processFinalResult(Object object) {
-
-            }
-
-            @Override
-            public void useStringResult(String result) {
-
-            }
-
-            @Override
-            public void storeTaskResult(TaskResult taskResult) {
-
-            }
-        });
-
-        x1.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-
     }
 
     @Override

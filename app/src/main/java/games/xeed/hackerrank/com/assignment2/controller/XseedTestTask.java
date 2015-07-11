@@ -61,6 +61,8 @@ public class XseedTestTask extends AsyncTask<Void,Object,TaskResult> {
                 Type listType = new TypeToken<List<GameItem>>(){}.getType();
                 List<GameItem> myModelList = gson.fromJson(responseString, listType);
                 taskResult.setGameItemList(myModelList);
+
+                return taskResult;
             }
         }catch (Exception e){
             publishProgress(e);
