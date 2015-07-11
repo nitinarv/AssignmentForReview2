@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -150,4 +151,6 @@ public class GameItem  implements Parcelable{
     public void setDemographic(List<DemographicItem> demographic) {
         this.demographic = demographic;
     }
+
+
 }

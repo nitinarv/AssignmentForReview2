@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -43,7 +44,7 @@ public class GamesDetailFragment extends Fragment implements View.OnClickListene
 
     private NetworkImageView game_icon;
     private TextView game_name;
-    private ImageView game_rate_star;
+    private RatingBar game_rate_star;
     private TextView game_rate;
     private LinearLayout pie_view;
     private Button button_share;
@@ -101,7 +102,7 @@ public class GamesDetailFragment extends Fragment implements View.OnClickListene
 
         game_icon = (NetworkImageView) view.findViewById(R.id.game_icon);
         game_name = (TextView) view.findViewById(R.id.game_name);
-        game_rate_star = (ImageView) view.findViewById(R.id.game_rate_star);
+        game_rate_star = (RatingBar) view.findViewById(R.id.game_rate_star);
         game_rate = (TextView) view.findViewById(R.id.game_rate);
         pie_view = (LinearLayout) view.findViewById(R.id.pie_view);
         button_share = (Button) view.findViewById(R.id.button_share);
@@ -129,7 +130,7 @@ public class GamesDetailFragment extends Fragment implements View.OnClickListene
         game_icon.setImageUrl(gameItem.getImage(), VolleySingleton.getInstance(getActivity()).getImageLoader());
         game_name.setText(gameItem.getName());
         game_rate.setText(gameItem.getRating());
-
+        game_rate_star.setRating(Float.parseFloat(gameItem.getRating()));
 
         if(gameItem.getDemographic()!=null && !gameItem.getDemographic().isEmpty()){
             CategorySeries cs = buildCategoryDataset(gameItem.getDemographic());

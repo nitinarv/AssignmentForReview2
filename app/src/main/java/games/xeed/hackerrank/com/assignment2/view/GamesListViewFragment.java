@@ -14,12 +14,17 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import games.xeed.hackerrank.com.assignment2.R;
 import games.xeed.hackerrank.com.assignment2.controller.OperationCallback;
 import games.xeed.hackerrank.com.assignment2.controller.XseedTestTask;
 import games.xeed.hackerrank.com.assignment2.model.GameItem;
+import games.xeed.hackerrank.com.assignment2.model.GamePriceComparator;
+import games.xeed.hackerrank.com.assignment2.model.GameRateComparator;
+import games.xeed.hackerrank.com.assignment2.model.ReverseOrder;
 import games.xeed.hackerrank.com.assignment2.model.TaskResult;
 
 /**
@@ -34,6 +39,8 @@ public class GamesListViewFragment extends ListFragment {
     String[] tickerSymbols;
     TaskResult taskResult;
     TaskCallbacks taskCallbacks;
+    List<GameItem> gameList;
+    TextView game_count;
 
     interface TaskCallbacks{
         public void onGameItemClicked(GameItem gameItem);
@@ -57,8 +64,7 @@ public class GamesListViewFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_list, container, false);
-
-
+        game_count = (TextView) view.findViewById(R.id.game_count);
 
         XseedTestTask x1 = new XseedTestTask(getActivity(), new OperationCallback() {
             @Override
@@ -99,14 +105,20 @@ public class GamesListViewFragment extends ListFragment {
             @Override
             public void storeTaskResult(TaskResult mTaskResult) {
                 taskResult = mTaskResult;
-                tickerSymbols = new String[taskResult.getGameItemList().size()];
-                for(int i=0; i< taskResult.getGameItemList().size(); i++){
-                    GameItem item = taskResult.getGameItemList().get(i);
-                    tickerSymbols[i] = item.getName();
-                }
-//                String[] tickerSymbols = new String[] { "MSFT", "ORCL", "AMZN", "ERTS" };
-                setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,
-                        tickerSymbols));
+
+
+
+                GamePriceComparator gamePriceComparator = new GamePriceComparator();
+                GameRateComparator gameRateComparator  = new GameRateComparator();
+                gameList= taskResult.getGameItemList();
+
+//                Collections.sort(taskResult.getGameItemList(), new GamePriceComparator());
+//                Collections.sort(taskResult.getGameItemList(), new ReverseOrder(gamePriceComparator));
+//                Collections.sort(gameList, gameRateComparator);
+                Collections.sort(taskResult.getGameItemList(), new ReverseOrder(gameRateComparator));
+
+                game_count.setText("Game Count: "+gameList.size());
+                setListAdapter(new GameListArrayAdapter(getActivity(), R.layout.item_game_list, gameList));
             }
         });
 
@@ -133,7 +145,7 @@ public class GamesListViewFragment extends ListFragment {
         // retrieve theListView item
 //        ListViewItem item = mItems.get(position);
         Intent detailScreenIntent = new Intent(getActivity(), DetailActivity.class);
-        GameItem gameItem = taskResult.getGameItemList().get(position);
+        GameItem gameItem = gameList.get(position);
         detailScreenIntent.putExtra(GAME_DETAIL_EXTRA,gameItem);
         startActivity(detailScreenIntent);
 
