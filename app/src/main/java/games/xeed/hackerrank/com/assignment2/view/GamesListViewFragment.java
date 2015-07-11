@@ -36,7 +36,7 @@ public static final String TAG_GAME_LIST_FRAGMENT = "games.xeed.hackerrank.com.a
 //        request_2_result_details = (TextView) view.findViewById(R.id.request_2_result_details);
 //        request_3_result_details = (TextView) view.findViewById(R.id.request_3_result_details);
 //
-//        runningTasks = new ArrayList<TruecallerTestTask>();
+//        runningTasks = new ArrayList<XseedTestTask>();
 
         String[] tickerSymbols = new String[] { "MSFT", "ORCL", "AMZN", "ERTS" };
         setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,
