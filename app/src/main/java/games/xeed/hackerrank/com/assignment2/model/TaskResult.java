@@ -11,6 +11,7 @@ public class TaskResult {
 
     Date startTime;
     Date endTime;
+    List<GameItem> gameItemList;
 
 
     public Date getStartTime() {
@@ -29,4 +30,11 @@ public class TaskResult {
         this.endTime = endTime;
     }
 
+    public List<GameItem> getGameItemList() {
+        return gameItemList;
+    }
+
+    public void setGameItemList(List<GameItem> gameItemList) {
+        this.gameItemList = gameItemList;
+    }
 }

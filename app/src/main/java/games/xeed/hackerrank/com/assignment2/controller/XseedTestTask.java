@@ -3,12 +3,17 @@ package games.xeed.hackerrank.com.assignment2.controller;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import games.xeed.hackerrank.com.assignment2.model.GameItem;
 import games.xeed.hackerrank.com.assignment2.model.ResponseDetails;
 import games.xeed.hackerrank.com.assignment2.model.TaskResult;
 
@@ -52,55 +57,10 @@ public class XseedTestTask extends AsyncTask<Void,Object,TaskResult> {
             String responseString = responseDetails.getReponseString();
 
             if(responseString!=null) {
-                android.util.Log.d("","");
-//                if (operationCallback instanceof First10thResultCallback) {
-//
-//                    Character nthItem = responseString.charAt(indexOfInterest - 1);
-//
-//                    taskResult.setFirstTenthElement(nthItem);
-//                    taskResult.setFirstTenthElementString(nthItem.toString());
-//                    return taskResult;
-//
-//                } else if (operationCallback instanceof All10thResultCallback) {
-//
-//                    List<Character> listOfCharacters = new ArrayList<Character>();
-//
-//                    StringBuilder stringBuilder = new StringBuilder();
-//                    for (int i = (indexOfInterest - 1); i < responseString.length(); i = i + indexOfInterest) {
-//                        Character charAtIndex = responseString.charAt(i);
-//                        listOfCharacters.add(charAtIndex);
-//                        stringBuilder.append(charAtIndex + ",\n");
-//                    }
-//
-//                    taskResult.setAllTenthElementString(stringBuilder.toString());
-//                    taskResult.setAllTenthElement(listOfCharacters);
-//
-//                    return taskResult;
-//
-//                } else if (operationCallback instanceof RepeatedWordCountCallback) {
-//
-//                    String[] splited = responseString.split("\\s+");
-//                    HashMap<String, Integer> wordCountMap = new HashMap<String, Integer>();
-//                    ;
-//                    StringBuilder stringBuilder = new StringBuilder();
-//                    for (String wordItem : splited) {
-//                        if (!wordCountMap.containsKey(wordItem.toLowerCase())) {
-//                            wordCountMap.put(wordItem.toLowerCase(), 1);
-//                        } else {
-//                            wordCountMap.put(wordItem.toLowerCase(), (wordCountMap.get(wordItem.toLowerCase()) + 1));
-//                        }
-//                    }
-//                    //convert to string
-//                    Set<String> mapkeys = wordCountMap.keySet();
-//                    for (String entry : mapkeys) {
-//                        stringBuilder.append("key: " + entry + ", value(count): " + wordCountMap.get(entry) + "\n");
-//                    }
-//
-//                    taskResult.setUniqueWordCountString(stringBuilder.toString());
-//                    taskResult.setUniqueWordCount(wordCountMap);
-//                    return taskResult;
-//
-//                }
+                Gson gson = new Gson();
+                Type listType = new TypeToken<List<GameItem>>(){}.getType();
+                List<GameItem> myModelList = gson.fromJson(responseString, listType);
+                taskResult.setGameItemList(myModelList);
             }
         }catch (Exception e){
             publishProgress(e);
@@ -116,25 +76,9 @@ public class XseedTestTask extends AsyncTask<Void,Object,TaskResult> {
         if(result!=null) {
             result.setEndTime(new Date());
             operationCallback.storeTaskResult(result);
-//            if(operationCallback instanceof First10thResultCallback){
-//                if (result.getFirstTenthElement() != null) {
-//                    ((First10thResultCallback) operationCallback).onTenthChar(result.getFirstTenthElement());
-//                    operationCallback.useStringResult(result.getFirstTenthElementString());
-//                }
-//            }else if(operationCallback instanceof All10thResultCallback){
-//                if (result.getAllTenthElement() != null) {
-//                    ((All10thResultCallback)operationCallback).onAllTenthCharsList(result.getAllTenthElement());
-//                    operationCallback.useStringResult(result.getAllTenthElementString());
-//                }
-//            }else if(operationCallback instanceof RepeatedWordCountCallback){
-//                if (result.getUniqueWordCount() != null) {
-//                    ((RepeatedWordCountCallback)operationCallback).onAllRepeatedWordWithCount(result.getUniqueWordCount());
-//                    operationCallback.useStringResult(result.getUniqueWordCountString());
-//                }
-//            }
-        }
+          }
     }
-//
+
     @Override
     protected void onProgressUpdate(Object... values) {
         super.onProgressUpdate(values);
