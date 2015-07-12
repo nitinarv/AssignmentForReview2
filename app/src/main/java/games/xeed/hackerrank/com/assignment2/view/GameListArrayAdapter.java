@@ -40,8 +40,8 @@ public class GameListArrayAdapter extends ArrayAdapter<GameItem>{
 
     public GameListArrayAdapter(Context context, int resource, List<GameItem> objects) {
         super(context, resource, objects);
-        this.objects = objects;
-        this.resultantObjects = objects;
+        this.objects = new ArrayList<GameItem>(objects);
+        this.resultantObjects = new ArrayList<GameItem>(objects);
         this.gamePriceComparator = new GamePriceComparator();
         this.gameRateComparator  = new GameRateComparator();
 
@@ -105,7 +105,7 @@ public class GameListArrayAdapter extends ArrayAdapter<GameItem>{
     }
 
     public void filterResult(String query){
-        SortTask st = new SortTask(resultantObjects, query);
+        SortTask st = new SortTask(objects, query);
 
         st.execute();
     }
@@ -154,17 +154,17 @@ public class GameListArrayAdapter extends ArrayAdapter<GameItem>{
 
         @Override
         protected Void doInBackground(Void... params) {
-            if(dQuery!=null && !dQuery.trim().isEmpty()) {
-                dResultantObjects = new ArrayList<GameItem>();
-                for (GameItem item : dGameItemsList) {
-                    if (item.getName().trim().toLowerCase().contains(dQuery.trim().toLowerCase())
-                            || item.getRating().trim().toLowerCase().contains(dQuery.trim().toLowerCase())) {
-                        dResultantObjects.add(item);
+                if (dQuery != null && !dQuery.trim().isEmpty()) {
+                    dResultantObjects = new ArrayList<GameItem>();
+                    for (GameItem item : dGameItemsList) {
+                        if (item.getName().trim().toLowerCase().contains(dQuery.trim().toLowerCase())
+                                || item.getRating().trim().toLowerCase().contains(dQuery.trim().toLowerCase())) {
+                            dResultantObjects.add(item);
+                        }
                     }
+                } else {
+                    dResultantObjects = new ArrayList<GameItem>(dGameItemsList);
                 }
-            }else{
-                dResultantObjects = new ArrayList<GameItem>(dGameItemsList);
-            }
             return null;
         }
 

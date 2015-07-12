@@ -55,6 +55,20 @@ public class GamesListViewFragment extends ListFragment implements View.OnClickL
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.button_sort_price:
+                if(gameListArrayAdapter!=null){
+                    gameListArrayAdapter.setSortRule(GameListArrayAdapter.SortRule.SORT_BY_PRICE_DESC);
+                    gameListArrayAdapter.applySortRule();
+                }
+                break;
+            case R.id.button_sort_rate:
+                if(gameListArrayAdapter!=null){
+                    gameListArrayAdapter.setSortRule(GameListArrayAdapter.SortRule.SORT_BY_RATE_DESC);
+                    gameListArrayAdapter.applySortRule();
+                }
+                break;
+        }
 
     }
 
