@@ -10,6 +10,7 @@
     <string name="main_activity_label">Home</string>
     <string name="detail_activity_label">Details</string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="action_reload">Reload</string>
 
 
 </resources>

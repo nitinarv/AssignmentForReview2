@@ -47,6 +47,7 @@ public class XseedTestTask extends AsyncTask<Void,Object,TaskResult> {
         super.onPreExecute();
         operationCallback.onProgressStarted();
         taskResult.setStartTime(new Date());
+        SharedPrefHandler.getInstance(context).upApiHitCount();
     }
 
     @Override

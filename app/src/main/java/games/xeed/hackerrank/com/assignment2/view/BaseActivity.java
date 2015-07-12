@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -44,6 +45,17 @@ public class BaseActivity extends AppCompatActivity {
         });
 
     }
+
+
+    @Override
+    public MenuInflater getMenuInflater() {
+        return super.getMenuInflater();
+    }
+
+    public Toolbar getToolbar() {
+        return mToolbar;
+    }
+
 
 
     public void setTitle(Context context, Class gClass){

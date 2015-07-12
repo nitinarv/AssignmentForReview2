@@ -25,6 +25,7 @@ import java.util.List;
 
 import games.xeed.hackerrank.com.assignment2.R;
 import games.xeed.hackerrank.com.assignment2.controller.OperationCallback;
+import games.xeed.hackerrank.com.assignment2.controller.SharedPrefHandler;
 import games.xeed.hackerrank.com.assignment2.controller.XseedTestTask;
 import games.xeed.hackerrank.com.assignment2.model.GameItem;
 import games.xeed.hackerrank.com.assignment2.model.GamePriceComparator;
@@ -103,6 +104,33 @@ public class GamesListViewFragment extends ListFragment implements View.OnClickL
         button_sort_price.setOnClickListener(this);
         button_sort_rate.setOnClickListener(this);
 
+        game_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (gameListArrayAdapter != null && game_search != null) {
+                    gameListArrayAdapter.filterResult(game_search.getText().toString());
+                }
+            }
+        });
+
+        loadApiList();
+
+        return view;
+    }
+
+
+
+    public void loadApiList(){
         XseedTestTask x1 = new XseedTestTask(getActivity(), new OperationCallback() {
 
             @Override
@@ -144,11 +172,10 @@ public class GamesListViewFragment extends ListFragment implements View.OnClickL
             public void storeTaskResult(TaskResult mTaskResult) {
                 taskResult = mTaskResult;
 
-                GamePriceComparator gamePriceComparator = new GamePriceComparator();
-                GameRateComparator gameRateComparator  = new GameRateComparator();
                 gameList= taskResult.getGameItemList();
 
                 game_count.setText("Game Count: " + gameList.size());
+                game_api_count.setText("Game Api Count: "+ SharedPrefHandler.getInstance(getActivity()).getApiHitCount());
                 gameListArrayAdapter = new GameListArrayAdapter(getActivity(), R.layout.item_game_list, gameList);
                 setListAdapter(gameListArrayAdapter);
             }
@@ -156,29 +183,7 @@ public class GamesListViewFragment extends ListFragment implements View.OnClickL
 
         x1.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-
-        game_search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(gameListArrayAdapter!=null && game_search!=null){
-                    gameListArrayAdapter.filterResult(game_search.getText().toString());
-                }
-            }
-        });
-
-        return view;
     }
-
 
 
 
