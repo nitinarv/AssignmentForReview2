@@ -172,7 +172,7 @@ public class GamesDetailFragment extends Fragment implements View.OnClickListene
         CategorySeries series=new CategorySeries("File");
 
         for(DemographicItem item: listDemo){
-            series.add(item.getCountry(), Double.parseDouble(item.getPercentage()));
+            series.add(item.getCountry() + "("+ item.getPercentage()+"%)", Double.parseDouble(item.getPercentage()));
         }
 
         return series;
@@ -192,7 +192,6 @@ public class GamesDetailFragment extends Fragment implements View.OnClickListene
         renderer.setZoomButtonsVisible(true);
         renderer.setZoomEnabled(true);
         renderer.setChartTitleTextSize(20);
-
 
         return new PieChart(series,renderer);
     }

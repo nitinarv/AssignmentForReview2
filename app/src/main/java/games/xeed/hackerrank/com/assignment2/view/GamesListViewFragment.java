@@ -5,13 +5,18 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,9 +35,8 @@ import games.xeed.hackerrank.com.assignment2.model.TaskResult;
 /**
  * Created by nitinraj.arvind on 7/11/2015.
  */
-public class GamesListViewFragment extends ListFragment {
+public class GamesListViewFragment extends ListFragment implements View.OnClickListener{
 
-    //    private List<GameListViewItem> mItems;
     public static final String TAG_GAME_LIST_FRAGMENT = "games.xeed.hackerrank.com.assignment2.view.GamesListViewFragment";
     public static final String GAME_DETAIL_EXTRA = "GAME_DETAIL_EXTRA";
 
@@ -40,7 +44,19 @@ public class GamesListViewFragment extends ListFragment {
     TaskResult taskResult;
     TaskCallbacks taskCallbacks;
     List<GameItem> gameList;
+    GameListArrayAdapter gameListArrayAdapter;
+
+
+    EditText game_search;
     TextView game_count;
+    TextView game_api_count;
+    Button button_sort_price;
+    Button button_sort_rate;
+
+    @Override
+    public void onClick(View v) {
+
+    }
 
     interface TaskCallbacks{
         public void onGameItemClicked(GameItem gameItem);
@@ -64,9 +80,17 @@ public class GamesListViewFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_list, container, false);
+        game_search = (EditText) view.findViewById(R.id.game_search);
         game_count = (TextView) view.findViewById(R.id.game_count);
+        game_api_count = (TextView) view.findViewById(R.id.game_api_count);
+        button_sort_price = (Button) view.findViewById(R.id.button_sort_price);
+        button_sort_rate = (Button) view.findViewById(R.id.button_sort_rate);
+
+        button_sort_price.setOnClickListener(this);
+        button_sort_rate.setOnClickListener(this);
 
         XseedTestTask x1 = new XseedTestTask(getActivity(), new OperationCallback() {
+
             @Override
             public void processException(Exception e) {
 
@@ -106,27 +130,37 @@ public class GamesListViewFragment extends ListFragment {
             public void storeTaskResult(TaskResult mTaskResult) {
                 taskResult = mTaskResult;
 
-
-
                 GamePriceComparator gamePriceComparator = new GamePriceComparator();
                 GameRateComparator gameRateComparator  = new GameRateComparator();
                 gameList= taskResult.getGameItemList();
 
-//                Collections.sort(taskResult.getGameItemList(), new GamePriceComparator());
-//                Collections.sort(taskResult.getGameItemList(), new ReverseOrder(gamePriceComparator));
-//                Collections.sort(gameList, gameRateComparator);
-                Collections.sort(taskResult.getGameItemList(), new ReverseOrder(gameRateComparator));
-
-                game_count.setText("Game Count: "+gameList.size());
-                setListAdapter(new GameListArrayAdapter(getActivity(), R.layout.item_game_list, gameList));
+                game_count.setText("Game Count: " + gameList.size());
+                gameListArrayAdapter = new GameListArrayAdapter(getActivity(), R.layout.item_game_list, gameList);
+                setListAdapter(gameListArrayAdapter);
             }
         });
 
         x1.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
+        game_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(gameListArrayAdapter!=null && game_search!=null){
+                    gameListArrayAdapter.filterResult(game_search.getText().toString());
+                }
+            }
+        });
 
         return view;
     }
@@ -142,10 +176,12 @@ public class GamesListViewFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        // retrieve theListView item
-//        ListViewItem item = mItems.get(position);
         Intent detailScreenIntent = new Intent(getActivity(), DetailActivity.class);
-        GameItem gameItem = gameList.get(position);
+        GameItem gameItem = gameListArrayAdapter.getItemForPosition(position);
+        if(gameItem==null){
+            Toast.makeText(getActivity(), "gameItem is null", Toast.LENGTH_LONG).show();
+            return;
+        }
         detailScreenIntent.putExtra(GAME_DETAIL_EXTRA,gameItem);
         startActivity(detailScreenIntent);
 
