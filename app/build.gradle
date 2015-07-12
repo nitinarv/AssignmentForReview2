@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.0 rc2"
 
     defaultConfig {
-        applicationId "res.truecaller.sample.com.truecallersample"
+        applicationId "games.xeed.hackerrank.com.assignment2"
         minSdkVersion 21
         targetSdkVersion 22
         versionCode 1
